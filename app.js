@@ -1,6 +1,7 @@
 const express = require('express');
 const axios = require('axios');
 const path = require('path');
+const serverless =require('serverless-http');
 
 const app = express();
 const port = 3006;
@@ -32,8 +33,11 @@ app.get('/get-location', async (req, res) => {
     res.status(500).json({ success: false, message: 'Error fetching geolocation', error: error.message });
   }
 });
-
+if(NODE_ENV=='development'){
 // Start the Express server
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
+}
+else{
+  module.exports=serverless(app);
