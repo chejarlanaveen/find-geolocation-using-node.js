@@ -1,14 +1,18 @@
 const express = require('express');
 const axios = require('axios');
+const path = require('path');
 
 const app = express();
-const port = 3000;
+const port = 3006;
 
 // Public IP address and API key for geolocation
-const ipAddress = '142.255.70.110'; // Replace with the IP address to geolocate
+const ipAddress = '142.250.70.36'; // Replace with the IP address to geolocate
 const apiKey = 'aaf848aaab11147b98d0942a9ed4eaaa'; // Replace with your IPstack API key
 
-// Route to get geolocation data
+// Serve static HTML file
+app.use(express.static(path.join(__dirname, 'public')));
+
+// API route to get geolocation data
 app.get('/get-location', async (req, res) => {
   try {
     const response = await axios.get(`http://api.ipstack.com/${ipAddress}?access_key=${apiKey}`);
@@ -33,5 +37,3 @@ app.get('/get-location', async (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
-
-
